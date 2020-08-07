@@ -111,7 +111,6 @@ async def reply(message):
                 message_id_to_author_id[sent_message.id] = message.author.id
                 user_message_id_to_bot_message[message.id] = sent_message
                 await sent_message.add_reaction('🚮')
-                await asyncio.sleep(1)
 
 
 client.run(DISCORD_TOKEN)
