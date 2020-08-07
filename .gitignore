@@ -8,3 +8,4 @@ private_commands
 commands/tex_temporary/*
 commands/run_temporary/*
 .python-version
+nohup.out
