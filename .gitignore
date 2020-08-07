@@ -4,7 +4,7 @@ config.json
 .\#*
 private_commands
 .vscode
-.pyenv-version
 .env
 commands/tex_temporary/*
 commands/run_temporary/*
+.python-version
