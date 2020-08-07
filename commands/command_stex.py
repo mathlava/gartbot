@@ -29,18 +29,31 @@ async def main(message, arg):
                 try:
                     res = await r.text()
                 except aiohttp.client_exceptions.ClientPayloadError:
-                    old_message = await message.channel.send(f'[tex] 数秒お待ち下さい...')
-                    await asyncio.sleep(2)
-                    cmd = f'nohup curl -X POST -F file=@{here}/tex_temporary/{fid}.tex https://tex.amas.dev/texjpg > {fid}.txt &'
-                    subprocess.call(cmd, shell=True)
-                    await asyncio.sleep(2)
-                    await old_message.delete()
-                    with open(f'{fid}.txt', 'r') as f:
-                        res = f.read()
-                    os.remove(f'{fid}.txt')
+                    res = None
             else:
-                return message.channel.send(f'[stex] 接続エラー：{r.status}')
-        
+                embed = discord.Embed(
+                    title='接続エラー',
+                    description=f'{r.status}',
+                    color=0xff0000
+                )
+                return await message.channel.send(embed=embed)
+    if res is None:
+        files['file'].close()
+        await asyncio.sleep(2)
+        files = {
+            'file': open(f'{here}/tex_temporary/{fid}.tex', 'r')
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post('https://tex.amas.dev/default', data=files) as r:
+                if r.status == 200:
+                    res = await r.text()
+                else:
+                    embed = discord.Embed(
+                        title='接続エラー',
+                        description=f'{r.status}',
+                        color=0xff0000
+                    )
+                    return await message.channel.send(embed=embed)
     os.remove(f'{here}/tex_temporary/{fid}.tex')
     match = re.search(r'https://tex\.amas\.dev/files/[a-z|0-9]+\.jpg', res)
         
