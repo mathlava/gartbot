@@ -7,31 +7,31 @@ async def main(message, arg):
         description='コマンド一覧'
     )
     embed.add_field(
-        name='`)run [言語名]\n[コード]`',
+        name='`)run 言語名\nコード`',
         value='プログラムを実行できます'
     )
     embed.add_field(
-        name='`)tex [LaTeXの数式]`',
+        name='`)tex LaTeXの数式`',
         value='数式を画像にできます'
     )
     embed.add_field(
-        name='`)stex [LaTeXの数式]`',
+        name='`)stex LaTeXの数式`',
         value='数式をスポイラー付き画像にできます'
     )
     embed.add_field(
-        name='`)latex [LaTeXの文章]`',
+        name='`)latex LaTeXの文章`',
         value='LaTeXで書かれた文章を画像にできます'
     )
     embed.add_field(
-        name='`)texpdf [LaTeXのコード(プリアンブルから)]`',
+        name='`)texpdf LaTeXのコード(プリアンブル含む)`',
         value='LaTeXで書かれた文章をpdfにできます'
     )
     embed.add_field(
-        name='`)ad [複素数]`',
+        name='`)ad 複素数`',
         value='素微分します'
     )
     embed.add_field(
-        name='`)ai [正整数]`',
+        name='`)ai 正整数`',
         value='素微分するとその整数になる整数のうち' \
             + ' [1, 10000000) の範囲にあるものを出力します'
     )
