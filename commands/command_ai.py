@@ -1,8 +1,12 @@
 import discord
 import aiohttp
 import sys
-sys.path.append('../')
-from config import MIYUBOT_TOKEN
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv(verbose=True)
+MIYUBOT_TOKEN = os.environ.get("MIYUBOT_TOKEN")
 
 async def main(message, arg):
     
