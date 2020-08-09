@@ -35,6 +35,10 @@ async def main(message, arg):
         value='素微分するとその整数になる整数のうち' \
             + ' [1, 10000000) の範囲にあるものを出力します'
     )
+    embed.add_field(
+        name='`)bf コード`',
+        value='BreainF\*ck のコードを実行できます'
+    )
     embed.set_author(
         name=message.author.name,
         icon_url=message.author.avatar_url
