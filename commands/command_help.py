@@ -37,7 +37,7 @@ async def main(message, arg):
     )
     embed.add_field(
         name='`)bf コード`',
-        value='BreainF\*ck のコードを実行できます'
+        value='BreainF\*ck のプログラムを実行できます'
     )
     embed.set_author(
         name=message.author.name,
