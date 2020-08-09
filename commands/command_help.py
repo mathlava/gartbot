@@ -37,8 +37,13 @@ async def main(message, arg):
     )
     embed.add_field(
         name='`)bf コード`',
-        value='BreainF\*ck のプログラムを実行できます'
+        value='BrainF\*ck のプログラムを実行できます'
     )
+    embed.add_field(
+        name='`)escape メッセージID`',
+        value=r'Discordの修飾(\*, \_, \\, ...)をエスケープして表示します'
+    )
+
     embed.set_author(
         name=message.author.name,
         icon_url=message.author.avatar_url
