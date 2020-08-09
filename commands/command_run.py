@@ -16,7 +16,7 @@ async def main(message, arg):
     arg = re.sub(r'```[A-z\-\+]*\n', '', arg).replace('```', '')
     url = 'https://wandbox.org/api/compile.json'
     language = arg.split()[0]
-    code = arg.replace(language, '').lstrip(' \n')
+    code = arg.replace(language, '', 1).lstrip(' \n')
     language = language.lower().replace('pp', '++').replace('sharp', '#')
     if not language in language_dict.keys():
         embed = discord.Embed(
