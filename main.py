@@ -95,7 +95,7 @@ async def reply(message):
             tmp_module = import_module(f'commands.command_{command}')
             async with message.channel.typing():
                 try:
-                    sent_messages = await tmp_module.main(message, arg)
+                    sent_message = await tmp_module.main(message, arg)
                 except discord.Forbidden:
                     return
                 except Exception as e:
@@ -105,14 +105,14 @@ async def reply(message):
                         description='エラーが続く場合は公式サーバで報告してください\n'
                             + 'https://discord.gg/7gypE3Q',
                         color=0xff0000
-                        )
+                    )
                     embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
-                    sent_messages = await message.channel.send(embed=embed)
-                message_id_to_author_id[sent_messages.id] = message.author.id
-                user_message_id_to_bot_message[message.id] = sent_messages
-                await sent_messages.add_reaction('🚮')
+                    sent_message = await message.channel.send(embed=embed)
+                message_id_to_author_id[sent_message.id] = message.author.id
+                user_message_id_to_bot_message[message.id] = sent_message
+                await sent_message.add_reaction('🚮')
         else:
-            tmp_module = import_module(f'bots')
+            tmp_module = import_module('bots')
             async with message.channel.typing():
                 try:
                     sent_messages = await tmp_module.loader(command, message, arg)
@@ -125,7 +125,7 @@ async def reply(message):
                         description='エラーが続く場合は公式サーバで報告してください\n'
                             + 'https://discord.gg/7gypE3Q',
                         color=0xff0000
-                        )
+                    )
                     embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
                     sent_messages = [await message.channel.send(embed=embed)]
                 for msg in sent_messages:
