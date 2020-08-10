@@ -1,5 +1,4 @@
 discord
 python-dotenv
-aiohttp
 sympy
 google-api-python-client
