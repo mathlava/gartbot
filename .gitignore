@@ -2,10 +2,10 @@ __pycache__
 config.json
 \#*\#
 .\#*
-private_commands
 .vscode
 .env
 commands/tex_temporary/*
 commands/run_temporary/*
 .python-version
 nohup.out
+.DS_Store
