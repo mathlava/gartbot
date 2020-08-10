@@ -15,7 +15,7 @@ async def loader(cmd, message, arg):
 
     if not cmd in listdir(dirname(__file__) + '/bin'):
         return []
-    cmd_path = dirname(__file__) + "/bin/" + cmd
+    cmd_path = dirname(__file__) + '/bin/' + cmd
     out_pb = cmdout_pb2.Output()
     try:
         out_bin = check_output([cmd_path], timeout=5, input=stdin, stderr=STDOUT)
@@ -24,7 +24,7 @@ async def loader(cmd, message, arg):
         out_msg = cmdout_pb2.BotMsg()
         buf = cmdout_pb2.OutputMedia()
         buf.type = 2
-        buf.data = "timeout".encode(encoding='utf-8')
+        buf.data = 'timeout'.encode(encoding='utf-8')
         buf.error = 1
         out_msg.medias.append(buf)
         out_pb.msgs.append(out_msg)
@@ -41,7 +41,7 @@ async def loader(cmd, message, arg):
     result = []
     for msg_pb in out_pb.msgs:
         fields = []
-        f = {'title': "",'val': ""}
+        f = {'title': '','val': ''}
 
         error = False
         for i, media in enumerate(msg_pb.medias):
@@ -54,10 +54,10 @@ async def loader(cmd, message, arg):
                     continue
             if i == len(msg_pb.medias) or not media.extend_field:
                 fields.append(f)
-                f = {'title': "",'val': ""}
+                f = {'title': '','val': ''}
         
         embed = discord.Embed()
-        if len(fields) == 1 and fields[0]['title'] == "":
+        if len(fields) == 1 and fields[0]['title'] == '':
             embed.description = fields[0]['val']
         else:
             for f in fields:
