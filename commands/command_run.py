@@ -17,7 +17,7 @@ async def main(message, arg):
     url = 'https://wandbox.org/api/compile.json'
     language = arg.split()[0]
     code = arg.replace(language, '', 1).lstrip(' \n')
-    language = language.lower().replace('pp', '++').replace('sharp', '#')
+    language = language.lower().replace('pp', '++').replace('sharp', '#').replace('clisp', 'lisp').replace('lisp', 'clisp')
     if not language in language_dict.keys():
         embed = discord.Embed(
             title='言語が間違っています',
