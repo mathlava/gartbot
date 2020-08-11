@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0c\x63mdout.proto\x12\x05proto\"%\n\x06Output\x12\x1b\n\x04msgs\x18\x01 \x03(\x0b\x32\r.proto.BotMsg\"V\n\x06\x42otMsg\x12\"\n\x06medias\x18\x01 \x03(\x0b\x32\x12.proto.OutputMedia\x12\x19\n\x11\x65mbed_recommended\x18\x02 \x01(\x08\x12\r\n\x05\x63olor\x18\x03 \x01(\r\"\xe6\x01\n\x0bOutputMedia\x12*\n\x04type\x18\x01 \x01(\x0e\x32\x1c.proto.OutputMedia.MediaType\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c\x12\x10\n\x08\x66ilename\x18\x03 \x01(\t\x12\x14\n\x0c\x65xtend_field\x18\x04 \x01(\x08\x12\r\n\x05level\x18\x05 \x01(\x05\x12\r\n\x05\x65rror\x18\x06 \x01(\r\x12\x0f\n\x07spoiled\x18\x07 \x01(\x08\"F\n\tMediaType\x12\x0b\n\x07UNKNOWN\x10\x00\x12\n\n\x06\x45XTEND\x10\x01\x12\x08\n\x04UTF8\x10\x02\x12\x08\n\x04\x46ILE\x10\x03\x12\x0c\n\x08\x46ILE_URL\x10\x04\x62\x06proto3'
+  serialized_pb=b'\n\x0c\x63mdout.proto\x12\x05proto\"%\n\x06Output\x12\x1b\n\x04msgs\x18\x01 \x03(\x0b\x32\r.proto.BotMsg\"V\n\x06\x42otMsg\x12\"\n\x06medias\x18\x01 \x03(\x0b\x32\x12.proto.OutputMedia\x12\x19\n\x11\x65mbed_recommended\x18\x02 \x01(\x08\x12\r\n\x05\x63olor\x18\x03 \x01(\r\"\x8d\x02\n\x0bOutputMedia\x12*\n\x04type\x18\x01 \x01(\x0e\x32\x1c.proto.OutputMedia.MediaType\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c\x12\x10\n\x08\x66ilename\x18\x03 \x01(\t\x12\x14\n\x0c\x65xtend_field\x18\x04 \x01(\x08\x12\r\n\x05level\x18\x05 \x01(\x05\x12\r\n\x05\x65rror\x18\x06 \x01(\r\x12\x0f\n\x07spoiled\x18\x07 \x01(\x08\x12\x12\n\nshort_code\x18\x08 \x01(\x08\x12\x11\n\tlong_code\x18\t \x01(\x08\"F\n\tMediaType\x12\x0b\n\x07UNKNOWN\x10\x00\x12\n\n\x06\x45XTEND\x10\x01\x12\x08\n\x04UTF8\x10\x02\x12\x08\n\x04\x46ILE\x10\x03\x12\x0c\n\x08\x46ILE_URL\x10\x04\x62\x06proto3'
 )
 
 
@@ -59,8 +59,8 @@ _OUTPUTMEDIA_MEDIATYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=311,
-  serialized_end=381,
+  serialized_start=350,
+  serialized_end=420,
 )
 _sym_db.RegisterEnumDescriptor(_OUTPUTMEDIA_MEDIATYPE)
 
@@ -200,6 +200,20 @@ _OUTPUTMEDIA = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='short_code', full_name='proto.OutputMedia.short_code', index=7,
+      number=8, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='long_code', full_name='proto.OutputMedia.long_code', index=8,
+      number=9, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -214,7 +228,7 @@ _OUTPUTMEDIA = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=151,
-  serialized_end=381,
+  serialized_end=420,
 )
 
 _OUTPUT.fields_by_name['msgs'].message_type = _BOTMSG

@@ -3,10 +3,24 @@ from subprocess import TimeoutExpired, check_output, CalledProcessError, STDOUT
 from os.path import dirname
 from os import listdir
 from proto import cmdin_pb2, cmdout_pb2, help_pb2
+from config import PREFIX
+
+def count_bquates(st):
+    mx = 0
+    i = 0
+    for x in st:
+        if x == '`':
+            i += 1
+            if mx < i:
+                mx = i
+        else:
+            i = 0
+    return mx
 
 async def loader(cmd, message, arg):
 
     in_pb: cmdin_pb2.Input = cmdin_pb2.Input()
+    in_pb.prefix = PREFIX
     buf = cmdin_pb2.InputMedia()
     buf.type = 2 #UTF8
     buf.data = arg.encode(encoding='utf-8')
@@ -48,17 +62,28 @@ async def loader(cmd, message, arg):
             error = error or media.error
             if media.type == 2:
                 if media.level == 0:
-                    if f['val'] == '':
-                        f['val'] = media.data.decode(encoding='utf-8')
-                    else:
-                        f['val'] += '\n' + media.data.decode(encoding='utf-8')
+                    line = '' if f['val'] == '' else '\n'
+                    line += media.data.decode(encoding='utf-8')
+                    if media.long_code:
+                        line = '```' + line.replace('```', ' `` ') + '```'
+                    elif media.short_code:
+                        qs = '`' * (count_bquates(line) + 1)
+                        bf = line
+                        line = qs
+                        if bf[0] == '`':
+                            line += ' '
+                        line += bf
+                        if line[-1] == '`':
+                            line += ' '
+                        line += qs
+                    f['val'] += line
                 else:
                     f['title'] += media.data.decode(encoding='utf-8')
                     continue
             if i == len(msg_pb.medias) or not media.extend_field:
                 fields.append(f)
                 f = {'title': '','val': ''}
-        
+
         embed = discord.Embed()
         if len(fields) == 1 and fields[0]['title'] == '':
             embed.description = fields[0]['val']

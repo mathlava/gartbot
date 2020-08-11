@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0b\x63mdin.proto\x12\x05proto\")\n\x05Input\x12 \n\x05media\x18\x01 \x03(\x0b\x32\x11.proto.InputMedia\"\x97\x01\n\nInputMedia\x12)\n\x04type\x18\x01 \x01(\x0e\x32\x1b.proto.InputMedia.MediaType\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c\x12\x10\n\x08\x66ilename\x18\x03 \x01(\t\"8\n\tMediaType\x12\x0b\n\x07UNKNOWN\x10\x00\x12\n\n\x06\x45XTEND\x10\x01\x12\x08\n\x04UTF8\x10\x02\x12\x08\n\x04\x46ILE\x10\x03J\x04\x08\x04\x10\x08\x62\x06proto3'
+  serialized_pb=b'\n\x0b\x63mdin.proto\x12\x05proto\"9\n\x05Input\x12 \n\x05media\x18\x01 \x03(\x0b\x32\x11.proto.InputMedia\x12\x0e\n\x06prefix\x18\x02 \x01(\t\"\x97\x01\n\nInputMedia\x12)\n\x04type\x18\x01 \x01(\x0e\x32\x1b.proto.InputMedia.MediaType\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c\x12\x10\n\x08\x66ilename\x18\x03 \x01(\t\"8\n\tMediaType\x12\x0b\n\x07UNKNOWN\x10\x00\x12\n\n\x06\x45XTEND\x10\x01\x12\x08\n\x04UTF8\x10\x02\x12\x08\n\x04\x46ILE\x10\x03J\x04\x08\x04\x10\x08\x62\x06proto3'
 )
 
 
@@ -54,8 +54,8 @@ _INPUTMEDIA_MEDIATYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=155,
-  serialized_end=211,
+  serialized_start=171,
+  serialized_end=227,
 )
 _sym_db.RegisterEnumDescriptor(_INPUTMEDIA_MEDIATYPE)
 
@@ -75,6 +75,13 @@ _INPUT = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='prefix', full_name='proto.Input.prefix', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -88,7 +95,7 @@ _INPUT = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=22,
-  serialized_end=63,
+  serialized_end=79,
 )
 
 
@@ -134,8 +141,8 @@ _INPUTMEDIA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=66,
-  serialized_end=217,
+  serialized_start=82,
+  serialized_end=233,
 )
 
 _INPUT.fields_by_name['media'].message_type = _INPUTMEDIA
