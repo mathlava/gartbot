@@ -22,7 +22,7 @@ async def loader(cmd, message, arg):
     in_pb: cmdin_pb2.Input = cmdin_pb2.Input()
     in_pb.prefix = PREFIX
     buf = cmdin_pb2.InputMedia()
-    buf.type = 2 #UTF8
+    buf.type = buf.UTF8
     buf.data = arg.encode(encoding='utf-8')
     in_pb.media.append(buf)
     stdin = in_pb.SerializeToString()
@@ -37,7 +37,7 @@ async def loader(cmd, message, arg):
     except TimeoutExpired:
         out_msg = cmdout_pb2.BotMsg()
         buf = cmdout_pb2.OutputMedia()
-        buf.type = 2
+        buf.type = buf.UTF8
         buf.data = 'timeout'.encode(encoding='utf-8')
         buf.error = 1
         out_msg.medias.append(buf)
@@ -45,7 +45,7 @@ async def loader(cmd, message, arg):
     except CalledProcessError as e:
         out_msg = cmdout_pb2.BotMsg()
         buf = cmdout_pb2.OutputMedia()
-        buf.type = 2
+        buf.type = buf.UTF8
         err = e.output
         buf.data = err
         buf.error = 1
@@ -60,7 +60,7 @@ async def loader(cmd, message, arg):
         error = False
         for i, media in enumerate(msg_pb.medias):
             error = error or media.error
-            if media.type == 2:
+            if media.type == media.UTF8:
                 if media.level == 0:
                     line = '' if f['val'] == '' else '\n'
                     line += media.data.decode(encoding='utf-8')
