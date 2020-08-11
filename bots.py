@@ -48,7 +48,10 @@ async def loader(cmd, message, arg):
             error = error or media.error
             if media.type == 2:
                 if media.level == 0:
-                    f['val'] += media.data.decode(encoding='utf-8')
+                    if f['val'] == '':
+                        f['val'] = media.data.decode(encoding='utf-8')
+                    else:
+                        f['val'] += '\n' + media.data.decode(encoding='utf-8')
                 else:
                     f['title'] += media.data.decode(encoding='utf-8')
                     continue
