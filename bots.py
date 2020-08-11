@@ -76,6 +76,8 @@ async def loader(cmd, message, arg):
                         if line[-1] == '`':
                             line += ' '
                         line += qs
+                    elif media.spoiled:
+                        line = '||' + line.replace('||', '\\|\\|') + '||'
                     f['val'] += line
                 else:
                     f['title'] += media.data.decode(encoding='utf-8')
