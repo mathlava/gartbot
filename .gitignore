@@ -8,5 +8,5 @@ commands/tex_temporary/*
 commands/run_temporary/*
 .python-version
 nohup.out
-bin/*
+bin
 .DS_Store
