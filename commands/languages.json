@@ -27,7 +27,7 @@
     "pypy": "pypy-head",
     "python": "cpython-head",
     "r": "r",
-    "rill": "rillc-head",
+    "rill": "rill-head",
     "ruby": "ruby-head",
     "rust": "rust-head",
     "scala": "scala-2.13.x",
