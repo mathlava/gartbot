@@ -48,7 +48,7 @@ async def main(message, arg):
         d_de = await sobibun(n_de)
         d = n * (d_nu * n_de - n_nu * d_de) / n_de ** 2 / n_norm2
         result = str(d)
-    embed = discord.Embed(description=result)
+    embed = discord.Embed(description=result.replace('I', 'i'))
     embed.set_author(
         name=message.author.name,
         icon_url=message.author.avatar_url
