@@ -50,7 +50,7 @@ async def on_ready():
 async def on_message(message):
     await reply(message)
     if 'にゃーん' in message.content:
-        message.add_reaction('😿')
+        await message.add_reaction('😿')
 
 
 @client.event
