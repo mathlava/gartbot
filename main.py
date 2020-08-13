@@ -87,10 +87,10 @@ async def reply(message):
 
     if message.content.startswith(PREFIX):
 
-        command = message.content[len(PREFIX):].split()[0]
+        command = message.content.split()[0][len(PREFIX):]
         arg = message.content[len(PREFIX) + len(command):].lstrip()
 
-        if os.path.exists(f'commands/command_{command}.py'):
+        if os.path.exists(f'{os.path.dirname(__file__)}/commands/command_{command}.py'):
 
             tmp_module = import_module(f'commands.command_{command}')
             async with message.channel.typing():
