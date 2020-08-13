@@ -1,6 +1,6 @@
 import discord
 from subprocess import TimeoutExpired, check_output, CalledProcessError, STDOUT
-from os.path import dirname, splitext
+from os.path import dirname, splitext, isdir
 from os import listdir
 from proto import cmdin_pb2, cmdout_pb2, help_pb2
 from config import PREFIX
@@ -31,7 +31,12 @@ async def loader(cmd, message, arg):
 
     if not cmd in listdir(dirname(__file__) + '/bin'):
         return []
-    cmd_path = dirname(__file__) + '/bin/' + cmd
+    cmd_path = ""
+    cmd_name_path = dirname(__file__) + '/bin/' + cmd
+    if isdir(cmd_name_path):
+        cmd_path = cmd_name_path + '/' + cmd
+    else:
+        cmd_path = cmd_name_path
     out_pb = cmdout_pb2.Output()
     try:
         out_bin = check_output([cmd_path], timeout=5, input=stdin, stderr=STDOUT)
