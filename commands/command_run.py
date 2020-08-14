@@ -46,12 +46,13 @@ async def main(message, arg):
                 )
                 return await message.channel.send(embed=embed)
     status = result.get('status')
+    signal = result.get('signal')
     stdout = result.get('program_output', '')
     compile_message = result.get('compiler_error')
     runtime_message = result.get('program_error')
     files = []
-    if status == '0' or status is None:
-        if status is None:
+    if status == '0' or signal == 'Killed':
+        if signal == 'Killed':
             embed = discord.Embed(
                 title='実行結果',
                 description=f'タイムアウト',
@@ -74,24 +75,31 @@ async def main(message, arg):
             with open(f'{here}/run_temporary/{fid}_stdout.txt', 'r') as f:
                 files.append(discord.File(f, 'stdout.txt'))
             os.remove(f'{here}/run_temporary/{fid}_stdout.txt')
-        if not compile_message is None:
+        if compile_message:
             with open(f'{here}/run_temporary/{fid}_compile_message.txt', 'w') as f:
                 f.write(stdout)
             with open(f'{here}/run_temporary/{fid}_compile_message.txt', 'r') as f:
                 files.append(discord.File(f, 'compile_message.txt'))
             os.remove(f'{here}/run_temporary/{fid}_compile_message.txt')
-        if not runtime_message is None:
+        if runtime_message:
             with open(f'{here}/run_temporary/{fid}_runtime_message.txt', 'w') as f:
                 f.write(stdout)
             with open(f'{here}/run_temporary/{fid}_runtime_message.txt', 'r') as f:
                 files.append(discord.File(f, 'runtime_message.txt'))
             os.remove(f'{here}/run_temporary/{fid}_runtime_message.txt')
     else:
-        embed = discord.Embed(
-            title='実行結果',
-            description=f'終了ステータス：{status}',
-            color=0xff0000
-        )
+        if not signal is None:
+            embed = discord.Embed(
+                title='実行結果',
+                description=f'終了シグナル：{signal}',
+                color=0xff0000
+            )
+        else:
+            embed = discord.Embed(
+                title='実行結果',
+                description=f'終了ステータス：{status}',
+                color=0xff0000
+            )
         if len(stdout) > 0 and len(stdout) <= 1000:
             embed.add_field(
                 name='標準出力',
@@ -103,7 +111,7 @@ async def main(message, arg):
             with open(f'{here}/run_temporary/{fid}_stdout.txt', 'r') as f:
                 files.append(discord.File(f, 'stdout.txt'))
             os.remove(f'{here}/run_temporary/{fid}_stdout.txt')
-        if not runtime_message is None:
+        if runtime_message:
             if len(runtime_message) <= 1000:
                 embed.add_field(
                     name='ランタイムエラー',
@@ -115,13 +123,13 @@ async def main(message, arg):
                 with open(f'{here}/run_temporary/{fid}_runtime_error.txt', 'r') as f:
                     files.append(discord.File(f, 'runtime_error.txt'))
                 os.remove(f'{here}/run_temporary/{fid}_runtime_error.txt')
-            if not compile_message is None:
+            if compile_message:
                 with open(f'{here}/run_temporary/{fid}_compile_error.txt', 'w') as f:
                     f.write(stdout)
                 with open(f'{here}/run_temporary/{fid}_compile_error.txt', 'r') as f:
                     files.append(discord.File(f, 'compile_error.txt'))
                 os.remove(f'{here}/run_temporary/{fid}_compile_error.txt')
-        if not compile_message is None:
+        if compile_message:
             if len(compile_message) <= 1000:
                 embed.add_field(
                     name='コンパイルエラー',
