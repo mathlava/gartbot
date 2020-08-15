@@ -29,10 +29,10 @@ async def loader(cmd, message, arg):
     in_pb.media.append(buf)
     stdin = in_pb.SerializeToString()
 
-    if not cmd in listdir(dirname(__file__) + '/bin'):
+    if not cmd in listdir(dirname(__file__) + '/commands/bin'):
         return []
     cmd_path = ""
-    cmd_name_path = dirname(__file__) + '/bin/' + cmd
+    cmd_name_path = dirname(__file__) + '/commands/bin/' + cmd
     if isdir(cmd_name_path):
         cmd_path = cmd_name_path + '/' + cmd
     else:
