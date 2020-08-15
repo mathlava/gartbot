@@ -1,14 +1,21 @@
+import glob
 import logging
 import os
 from importlib import import_module
 
 import discord
 
-from config import PREFIX
 from classes import LimitedSizeDict
+from config import PREFIX
 
 message_id_to_author_id = LimitedSizeDict(size_limit=100)
 user_message_id_to_bot_message = LimitedSizeDict(size_limit=100)
+
+python_command_dict = {}
+for cmd_path in glob.glob(os.path.dirname(os.path.abspath(__file__)) + '/commands/python/command_*.py'):
+    cmd_name = os.path.splitext(os.path.basename(cmd_path))[0].replace('command_', '')
+    python_command_dict[cmd_name] = import_module(f'commands.python.command_{cmd_name}')
+print(python_command_dict)
 
 async def reply(message):
 
@@ -21,9 +28,9 @@ async def reply(message):
         command = message.content.split()[0][len(PREFIX):]
         arg = message.content[len(PREFIX) + len(command):].lstrip()
 
-        if os.path.exists(f'{os.path.dirname(os.path.abspath(__file__))}/commands/python/command_{command}.py'):
+        if command in python_command_dict.keys():
 
-            tmp_module = import_module(f'commands.python.command_{command}')
+            tmp_module = python_command_dict[command]
             async with message.channel.typing():
                 try:
                     sent_message = await tmp_module.main(message, arg)
