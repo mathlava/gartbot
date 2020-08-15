@@ -15,7 +15,6 @@ python_command_dict = {}
 for cmd_path in glob.glob(os.path.dirname(os.path.abspath(__file__)) + '/commands/python/command_*.py'):
     cmd_name = os.path.splitext(os.path.basename(cmd_path))[0].replace('command_', '')
     python_command_dict[cmd_name] = import_module(f'commands.python.command_{cmd_name}')
-print(python_command_dict)
 
 async def reply(message):
 
