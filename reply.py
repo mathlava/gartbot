@@ -1,9 +1,14 @@
 import logging
 import os
+from importlib import import_module
 
 import discord
 
 from config import PREFIX
+from classes import LimitedSizeDict
+
+message_id_to_author_id = LimitedSizeDict(size_limit=100)
+user_message_id_to_bot_message = LimitedSizeDict(size_limit=100)
 
 async def reply(message):
 

@@ -1,34 +1,12 @@
 import asyncio
 import os
-from collections import OrderedDict
 from importlib import import_module
 import logging
 
 import discord
 
 from config import DISCORD_TOKEN, PREFIX
-from reply import reply
-
-
-class LimitedSizeDict(OrderedDict):
-
-
-    def __init__(self, *args, **kwds):
-
-        self.size_limit = kwds.pop("size_limit", None)
-        OrderedDict.__init__(self, *args, **kwds)
-        self._check_size_limit()
-
-    def __setitem__(self, key, value):
-
-        OrderedDict.__setitem__(self, key, value)
-        self._check_size_limit()
-
-    def _check_size_limit(self):
-
-        if self.size_limit is not None:
-            while len(self) > self.size_limit:
-                self.popitem(last=False)
+from reply import reply, message_id_to_author_id, user_message_id_to_bot_message
 
 
 client = discord.Client()
@@ -36,13 +14,6 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-
-    global message_id_to_author_id
-    message_id_to_author_id = LimitedSizeDict(size_limit=100)
-
-    global user_message_id_to_bot_message
-    user_message_id_to_bot_message = LimitedSizeDict(size_limit=100)
-
     print('起動しました')
 
 

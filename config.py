@@ -9,4 +9,4 @@ DISCORD_TOKEN = os.environ.get('DISCORD_TOKEN')
 with open(os.path.dirname(__file__) + '/config.json', 'r') as f:
     config_dict = json.load(f)
 
-PREFIX = config_dict['prefix']
+PREFIX: str = config_dict['prefix']
