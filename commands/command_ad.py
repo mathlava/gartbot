@@ -31,22 +31,22 @@ async def main(message, arg):
         d = await sobibun(sy.sign(n) * n)
         result = str(sy.sign(n) * d)
     elif n.is_real:
-        n_nu = sy.fraction(n)[0] * sy.sign(n)
-        n_de = sy.fraction(n)[1]
-        while n_nu != sy.floor(n_nu):
-            n_nu *= 10
-            n_de *= 10
-        d_nu = await sobibun(n_nu)
-        d_de = await sobibun(n_de)
-        d = sy.sign(n) * (d_nu * n_de - n_nu * d_de) / n_de ** 2
+        n_numerator = sy.fraction(n)[0] * sy.sign(n)
+        n_denominator = sy.fraction(n)[1]
+        while n_numerator != sy.floor(n_numerator):
+            n_numerator *= 10
+            n_denominator *= 10
+        d_numerator = await sobibun(n_numerator)
+        d_denominator = await sobibun(n_denominator)
+        d = sy.sign(n) * (d_numerator * n_denominator - n_numerator * d_denominator) / n_denominator ** 2
         result = str(d)
     else:
         n_norm2 = sy.re(n) ** 2 + sy.im(n) ** 2
-        n_nu = sy.fraction(n_norm2)[0]
-        n_de = sy.fraction(n_norm2)[1]
-        d_nu = await sobibun(n_nu)
-        d_de = await sobibun(n_de)
-        d = n * (d_nu * n_de - n_nu * d_de) / n_de ** 2 / n_norm2
+        n_numerator = sy.fraction(n_norm2)[0]
+        n_denominator = sy.fraction(n_norm2)[1]
+        d_numerator = await sobibun(n_numerator)
+        d_denominator = await sobibun(n_denominator)
+        d = n * (d_numerator * n_denominator - n_numerator * d_denominator) / n_denominator ** 2 / n_norm2
         result = str(d)
     embed = discord.Embed(description=result.replace('I', 'i'))
     embed.set_author(
