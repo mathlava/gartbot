@@ -46,7 +46,7 @@ async def main(message, arg):
         n_denominator = sy.fraction(n_norm2)[1]
         d_numerator = await sobibun(n_numerator)
         d_denominator = await sobibun(n_denominator)
-        d = n * (d_numerator * n_denominator - n_numerator * d_denominator) / n_denominator ** 2 / n_norm2
+        d = n * (d_numerator * n_denominator - n_numerator * d_denominator) / (2 * n_denominator * n_numerator)
         result = str(d)
     embed = discord.Embed(description=result.replace('I', 'i'))
     embed.set_author(
