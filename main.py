@@ -95,9 +95,18 @@ async def reply(message):
             tmp_module = import_module(f'commands.command_{command}')
             async with message.channel.typing():
                 try:
-                    sent_message = await tmp_module.main(message, arg)
+                    sent_message = await asyncio.wait_for(tmp_module.main(message, arg), timeout=5.0)
                 except discord.Forbidden:
                     return
+                except asyncio.TimeoutError as e:
+                    logging.exception(e)
+                    embed = discord.Embed(
+                        title='タイムアウト！',
+                        description='５秒を超えました！',
+                        color=0xff0000
+                    )
+                    embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
+                    sent_message = await message.channel.send(embed=embed)
                 except Exception as e:
                     logging.exception(e)
                     embed = discord.Embed(
