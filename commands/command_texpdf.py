@@ -33,8 +33,8 @@ async def main(message, arg):
         async with aiohttp.ClientSession() as session:
             async with session.get(match.group()) as r:
                 with open(f'{fid}.pdf', 'wb') as f:
-                    if status == 200:
-                        f.write(r.read())
+                    if r.status == 200:
+                        f.write(await r.read())
                     else:
                         return await message.channel.send(f'[texpdf] 接続エラー：{r.status}')
 
