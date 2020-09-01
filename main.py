@@ -95,7 +95,7 @@ async def reply(message):
             tmp_module = import_module(f'commands.command_{command}')
             async with message.channel.typing():
                 try:
-                    sent_message = await asyncio.wait_for(tmp_module.main(message, arg), timeout=5.0)
+                    sent_message = await asyncio.wait_for(tmp_module.main(message, arg), timeout=10.0)
                 except discord.Forbidden:
                     return
                 except asyncio.TimeoutError as e:
