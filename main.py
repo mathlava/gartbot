@@ -81,7 +81,7 @@ async def on_reaction_add(reaction, user):
 
 async def reply(message):
 
-    if message.author.bot and not message.author.id in (614130545227726849, 661570977863565323):
+    if message.author.bot and not message.author.id in (614130545227726849, 674207357202464769):
         return
 
     if message.content.startswith(PREFIX):
