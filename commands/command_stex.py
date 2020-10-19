@@ -16,12 +16,12 @@ async def main(message, arg):
     with open(f'{here}/tex_template/tex.tex', 'r') as f:
         tex_con = f.read().replace('[REPLACE]', arg.strip())
 
-    cp = subprocess.run(["tex2jpg"], input=tex_con.encode('UTF-8'), stdout=subprocess.PIPE)
+    cp = subprocess.run(["tex2jpg"], input=tex_con.encode('UTF-8'), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     if cp.returncode != 0:
         embed = discord.Embed(
             title='レンダリングエラー',
-            description=f'```\n{cp.stderr}\n```',
+            description=f'```\n{cp.stderr.decode("UTF-8")}\n```',
             color=0xff0000
             )
         embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
