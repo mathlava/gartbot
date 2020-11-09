@@ -1,5 +1,4 @@
 import asyncio
-import random
 import os
 import subprocess
 import io
@@ -10,10 +9,9 @@ import discord
 async def main(message, arg):
 
     arg = arg.replace('```tex', '').replace('```', '')
-    fid = str(random.SystemRandom().randint(10000, 99999))
     here = os.path.dirname(__file__)
 
-    with open(f'{here}/tex_template/texp.tex', 'r') as f:
+    with open(f'{here}/tex_template/latex.tex', 'r') as f:
         tex_con = f.read().replace('[REPLACE]', arg.strip())
 
     cp = subprocess.run(['tex2jpg', '--margins', '10 -10 10 -10'], input=tex_con.encode('UTF-8'), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
