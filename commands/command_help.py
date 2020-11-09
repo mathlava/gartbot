@@ -27,7 +27,7 @@ async def main(message, arg):
         value='数式をスポイラー付き画像にできます'
     )
     embed.add_field(
-        name=f'`{PREFIX}latex LaTeXの文章`',
+        name=f'`{PREFIX}texp LaTeXの文章`',
         value='LaTeXで書かれた文章を画像にできます'
     )
     embed.add_field(
