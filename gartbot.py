@@ -1,9 +1,10 @@
 import asyncio
+import logging
 import os
+import secrets
 import traceback
 from collections import OrderedDict
 from importlib import import_module
-import logging
 
 import discord
 
@@ -43,9 +44,9 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+
     await reply(message)
-    if 'にゃーん' in message.content:
-        await message.add_reaction('😿')
+    await inside_joke(message)
 
 
 @client.event
@@ -107,5 +108,29 @@ async def reply(message):
                 message_id_to_author_id[sent_message.id] = message.author.id
                 user_message_id_to_bot_message[message.id] = sent_message
                 await sent_message.add_reaction('🚮')
+
+async def inside_joke(message):
+
+    if ':poponta:' in message.content or ':poponting:' in message.content:
+        await message.add_reaction('🤔')
+    
+    if 'にゃーん' in message.content:
+        await message.add_reaction('😿')
+
+    if message.content.startswith('.OX'):
+
+        def shobo_check(reaction, user):
+            return user.id == 667746111808864262 #しょぼっと
+        
+        try:
+            reaction, user = await client.wait_for('reaction_add', check=shobo_check, timeout=5.0)
+            print(user)
+        except asyncio.TimeoutError:
+            await message.add_reaction(secrets.choice(('⭕', '❌')))
+        else:
+            if str(reaction.emoji) == '⭕':
+                await reaction.message.add_reaction('❌')
+            elif str(reaction.emoji) == '❌':
+                await reaction.message.add_reaction('⭕')
 
 client.run(DISCORD_TOKEN)
