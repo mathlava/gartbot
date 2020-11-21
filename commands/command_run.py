@@ -2,6 +2,7 @@ import json
 import os
 import random
 import re
+import io
 
 import aiohttp
 import discord
@@ -55,7 +56,7 @@ async def main(message, arg):
         if len(item[1]) > 1000 or len(item[1].split('\n')) > 100:
             files.append(
                 discord.File(
-                    item[1],
+                    io.StringIO(item[1]),
                     item[0] + '.txt'
                 )
             )
