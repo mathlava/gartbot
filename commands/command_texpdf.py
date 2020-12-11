@@ -23,7 +23,7 @@ async def main(message, arg):
 
     if dvipdfmx.returncode != 0:
         with open('/tmp/' + fid + '.log', 'r') as f:
-            err = f.read.split('!')[1].split('Here')[0]
+            err = f.read().split('!')[1].split('Here')[0]
         embed = discord.Embed(
             title='レンダリングエラー',
             description=f'```\n{err}\n```',
