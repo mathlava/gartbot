@@ -19,7 +19,15 @@ async def main(message, arg):
     with open(f'/tmp/' + fid + '.tex', 'w') as f:
         f.write(tex_con)
 
-    _ = subprocess.run(['uplatex', '-halt-on-error', '-output-directory=/tmp', '/tmp/' + fid + '.tex'])
+    try:
+        _ = subprocess.run(['uplatex', '-halt-on-error', '-output-directory=/tmp', '/tmp/' + fid + '.tex'], timeout=10)
+    except subprocess.TimeoutExpired:
+        embed = discord.Embed(
+            title='タイムアウト',
+            color=0xff0000
+        )
+        embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
+        return await message.channel.send(embed=embed)
     dvipdfmx = subprocess.run(['dvipdfmx', '-q', '-o', '/tmp/' + fid + '.pdf', '/tmp/' + fid + '.dvi'])
 
     if dvipdfmx.returncode != 0:
@@ -29,7 +37,7 @@ async def main(message, arg):
             title='レンダリングエラー',
             description=f'```\n{err}\n```',
             color=0xff0000
-            )
+        )
         embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
         return await message.channel.send(embed=embed)
     
