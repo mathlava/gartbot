@@ -16,7 +16,7 @@ async def main(message, arg):
     with open(f'{here}/tex_template/tex.tex', 'r') as f:
         tex_con = f.read().replace('[REPLACE]', arg.strip())
     
-    if '\\input' in tex_con or '\\include' in tex_con or '\csname' in tex_con:
+    if '\\input' in tex_con or '\\include' in tex_con or '\\csname' in tex_con:
         embed = discord.Embed(
             title='使用できない文字列が含まれています',
             color=0xff0000

@@ -15,7 +15,7 @@ async def main(message, arg):
 
     tex_con = arg.strip()
 
-    if 'verbatim' in tex_con or '\\input' in tex_con or '\\include' in tex_con or 'csname' in tex_con:
+    if 'verbatim' in tex_con or '\\input' in tex_con or '\\include' in tex_con or '\\csname' in tex_con:
         embed = discord.Embed(
             title='使用できない文字列が含まれています',
             color=0xff0000
