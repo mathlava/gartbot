@@ -13,7 +13,7 @@ async def main(message, arg):
     fid = str(random.SystemRandom().randint(10000, 99999))
     here = os.path.dirname(__file__)
 
-    tex_con = arg.replace('\\input', '').('\\include', '').strip()
+    tex_con = arg.replace('verbatim', '').replace('\\input', '').('\\include', '').strip()
 
     with open(f'/tmp/' + fid + '.tex', 'w') as f:
         f.write(tex_con)
