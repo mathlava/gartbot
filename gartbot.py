@@ -77,7 +77,7 @@ async def on_reaction_add(reaction, user):
 
 async def reply(message):
 
-    if message.author.bot and not message.author.id in (614130545227726849, 674207357202464769):
+    if message.author.bot and not message.author.id in (614130545227726849, 674207357202464769): # PythonBot, botphilia
         return
 
     if message.content.startswith(PREFIX):
@@ -120,7 +120,7 @@ async def inside_joke(message):
     if message.content.startswith('.OX'):
 
         def shobo_check(reaction, user):
-            return user.id == 667746111808864262 #しょぼっと
+            return user.id == 667746111808864262 # しょぼっと
         
         try:
             reaction, user = await client.wait_for('reaction_add', check=shobo_check, timeout=5.0)
