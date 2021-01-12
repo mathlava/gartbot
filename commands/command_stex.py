@@ -28,8 +28,7 @@ async def main(message, arg):
         f.write(tex_con)
 
     try:
-        _ = subprocess.run(['uplatex', '-halt-on-error', '-output-directory=/tmp', '/tmp/' + fid + '.tex'], timeout=5)
-        dvipdfmx = subprocess.run(['dvipdfmx', '-q', '-o', '/tmp/' + fid + '.pdf', '/tmp/' + fid + '.dvi'], timeout=5)
+        uplatex = subprocess.run(['uplatex', '-halt-on-error', '-output-directory=/tmp', '/tmp/' + fid + '.tex'], timeout=10)
     except subprocess.TimeoutExpired:
         embed = discord.Embed(
             title='タイムアウト',
@@ -38,9 +37,11 @@ async def main(message, arg):
         embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
         return await message.channel.send(embed=embed)
 
-    if dvipdfmx.returncode != 0:
+    if uplatex.returncode != 0:
+        subprocess.run(['dvipdfmx', '-q', '-o', '/tmp/' + fid + '.pdf', '/tmp/' + fid + '.dvi'], timeout=10)
         with open('/tmp/' + fid + '.log', 'r') as f:
             err = f.read().split('!')[1].split('Here')[0]
+        subprocess.run(f'rm /tmp/{fid}.*', shell=True)
         embed = discord.Embed(
             title='レンダリングエラー',
             description=f'```\n{err}\n```',
@@ -49,9 +50,12 @@ async def main(message, arg):
         embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
         return await message.channel.send(embed=embed)
     
-    _ = subprocess.run(['pdfcrop', '/tmp/' + fid + '.pdf', '--margins', '4 4 4 4'])
+    subprocess.run(['pdfcrop', '/tmp/' + fid + '.pdf', '--margins', '4 4 4 4'])
     pdftoppm = subprocess.run(['pdftoppm', '-png', '-r', '800', '/tmp/' + fid + '-crop.pdf'], stdout=subprocess.PIPE)
+
+    subprocess.run(f'rm /tmp/{fid}.*', shell=True)
 
     embed = discord.Embed(color=0x008000)
     embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
-    return await message.channel.send(file=discord.File(io.BytesIO(pdftoppm.stdout), filename='SPOILER_tex.png'), embed=embed)
+    embed.set_image(url=f'attachment://tex.png')
+    return await message.channel.send(file=discord.File(io.BytesIO(pdftoppm.stdout), filename='tex.png'), embed=embed)
