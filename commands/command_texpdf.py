@@ -49,7 +49,8 @@ async def main(message, arg):
         return await message.channel.send(embed=embed)
     else:
         subprocess.run(['dvipdfmx', '-q', '-o', '/tmp/' + fid + '.pdf', '/tmp/' + fid + '.dvi'], timeout=10)
-        subprocess.run(f'rm /tmp/{fid}.*', shell=True)
         embed = discord.Embed(color=0x008000)
         embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
-        return await message.channel.send(file=discord.File('/tmp/' + fid + '.pdf'), embed=embed)
+        my_msg = await message.channel.send(file=discord.File('/tmp/' + fid + '.pdf'), embed=embed)
+        subprocess.run(f'rm /tmp/{fid}.*', shell=True)
+        return my_msg
