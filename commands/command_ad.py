@@ -1,8 +1,13 @@
 import discord
 import sympy as sy
 
+class TooLargeNumber(Exception):
+    pass
+
 async def sobibun(value):
 
+    if value > 100000000:
+        raise TooLargeNumber()
     factors = sy.factorint(int(value))
     memo = {j: value * j for j in factors.values()}
     wa = [memo[factors[i]] // i for i in factors.keys()]
@@ -25,29 +30,41 @@ async def main(message, arg):
             icon_url=message.author.avatar_url
         )
         return await message.channel.send(embed=embed)
-    if n == 0:
-        result = 'undefined'
-    elif n.is_Integer:
-        d = await sobibun(sy.sign(n) * n)
-        result = str(sy.sign(n) * d)
-    elif n.is_real:
-        n_numerator = sy.fraction(n)[0] * sy.sign(n)
-        n_denominator = sy.fraction(n)[1]
-        while n_numerator != sy.floor(n_numerator):
-            n_numerator *= 10
-            n_denominator *= 10
-        d_numerator = await sobibun(n_numerator)
-        d_denominator = await sobibun(n_denominator)
-        d = sy.sign(n) * (d_numerator * n_denominator - n_numerator * d_denominator) / n_denominator ** 2
-        result = str(d)
-    else:
-        n_norm2 = sy.re(n) ** 2 + sy.im(n) ** 2
-        n_numerator = sy.fraction(n_norm2)[0]
-        n_denominator = sy.fraction(n_norm2)[1]
-        d_numerator = await sobibun(n_numerator)
-        d_denominator = await sobibun(n_denominator)
-        d = n * (d_numerator * n_denominator - n_numerator * d_denominator) / (2 * n_denominator * n_numerator)
-        result = str(d)
+    try:
+        if n == 0:
+            result = 'undefined'
+        elif n.is_Integer:
+            d = await sobibun(sy.sign(n) * n)
+            result = str(sy.sign(n) * d)
+        elif n.is_real:
+            n_numerator = sy.fraction(n)[0] * sy.sign(n)
+            n_denominator = sy.fraction(n)[1]
+            while n_numerator != sy.floor(n_numerator):
+                n_numerator *= 10
+                n_denominator *= 10
+            d_numerator = await sobibun(n_numerator)
+            d_denominator = await sobibun(n_denominator)
+            d = sy.sign(n) * (d_numerator * n_denominator - n_numerator * d_denominator) / n_denominator ** 2
+            result = str(d)
+        else:
+            n_norm2 = sy.re(n) ** 2 + sy.im(n) ** 2
+            n_numerator = sy.fraction(n_norm2)[0]
+            n_denominator = sy.fraction(n_norm2)[1]
+            d_numerator = await sobibun(n_numerator)
+            d_denominator = await sobibun(n_denominator)
+            d = n * (d_numerator * n_denominator - n_numerator * d_denominator) / (2 * n_denominator * n_numerator)
+            result = str(d)
+    except TooLargeNumber:
+        embed = discord.Embed(
+            title='エラー',
+            description='値が大きすぎるか複雑すぎます',
+            color=0xff0000
+            )
+        embed.set_author(
+            name=message.author.name,
+            icon_url=message.author.avatar_url
+        )
+        return await message.channel.send(embed=embed)
     embed = discord.Embed(description=result.replace('I', 'i'))
     embed.set_author(
         name=message.author.name,
