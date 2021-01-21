@@ -55,5 +55,4 @@ async def main(message, arg):
 
     embed = discord.Embed(color=0x008000)
     embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
-    embed.set_image(url=f'attachment://tex.png')
-    return await message.channel.send(file=discord.File(io.BytesIO(pdftoppm.stdout), filename='tex.png'), embed=embed)
+    return await message.channel.send(file=discord.File(io.BytesIO(pdftoppm.stdout), filename='tex.png', spoiler=True), embed=embed)
