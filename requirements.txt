@@ -1,5 +1,3 @@
 discord.py
 python-dotenv
 sympy
-google-api-python-client
-cairosvg
