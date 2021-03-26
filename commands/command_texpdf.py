@@ -10,12 +10,16 @@ import discord
 async def main(message, arg):
 
     arg = arg.replace('```tex', '').replace('```', '')
+    # file id
     fid = str(random.SystemRandom().randint(10000, 99999))
     here = os.path.dirname(__file__)
 
     tex_con = arg.strip()
 
-    if 'verbatim' in tex_con or '\\input' in tex_con or '\\include' in tex_con or '\\csname' in tex_con:
+    if '\\input' in tex_con or '\\include' in tex_con or '\\csname' in tex_con \\
+        or '\\listinginput' in tex_con or '\\verbinput' in tex_con or '\\lstinputlisting' in tex_con \\
+        or '\\subfile' in tex_con or '\\import' in tex_con '\\tempfile' in tex_con \\
+        or '\\makeatletter' in tex_con or '\\pdffiledump' in tex_con:
         embed = discord.Embed(
             title='使用できない文字列が含まれています',
             color=0xff0000
