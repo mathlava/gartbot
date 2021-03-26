@@ -11,7 +11,7 @@ async def main(message, arg):
 
     arg = arg.replace('```tex', '').replace('```', '')
     # file id
-    fid = str(random.SystemRandom().randint(10000, 99999))
+    fid = str(random.SystemRandom().randrange(10000, 100000))
     here = os.path.dirname(__file__)
 
     tex_con = arg.strip()
