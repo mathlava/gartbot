@@ -10,4 +10,4 @@ async def main(message, arg):
         name=message.author.name,
         icon_url=message.author.avatar_url
     )
-    return await message.channel.send(embed=embed)
+    return await message.reply(embed=embed)

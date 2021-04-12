@@ -130,7 +130,7 @@ async def reply(message):
                         color=0xff0000
                     )
                     embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
-                    sent_message = await message.channel.send(embed=embed)
+                    sent_message = await message.reply(embed=embed)
                 global message_id_to_author_id
                 global user_message_id_to_bot_message
                 # save the author of the message the bot sent

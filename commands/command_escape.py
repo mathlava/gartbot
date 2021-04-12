@@ -12,7 +12,7 @@ async def main(message, arg):
             name=message.author.name,
             icon_url=message.author.avatar_url
         )
-        return await message.channel.send(embed=embed)
+        return await message.reply(embed=embed)
     try:
         usr_msg = await message.channel.fetch_message(message.reference.message_id)
     except discord.errors.NotFound:
@@ -25,6 +25,6 @@ async def main(message, arg):
             name=message.author.name,
             icon_url=message.author.avatar_url
         )
-        return await message.channel.send(embed=embed)
+        return await message.reply(embed=embed)
     new_str = discord.utils.escape_markdown(usr_msg.content)
     return await message.reply(new_str)

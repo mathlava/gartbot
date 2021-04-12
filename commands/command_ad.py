@@ -29,7 +29,7 @@ async def main(message, arg):
             name=message.author.name,
             icon_url=message.author.avatar_url
         )
-        return await message.channel.send(embed=embed)
+        return await message.reply(embed=embed)
     try:
         if n == 0:
             result = 'undefined'
@@ -64,10 +64,10 @@ async def main(message, arg):
             name=message.author.name,
             icon_url=message.author.avatar_url
         )
-        return await message.channel.send(embed=embed)
+        return await message.reply(embed=embed)
     embed = discord.Embed(description=result.replace('I', 'i'))
     embed.set_author(
         name=message.author.name,
         icon_url=message.author.avatar_url
     )
-    return await message.channel.send(embed=embed)
+    return await message.reply(embed=embed)

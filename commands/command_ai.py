@@ -33,7 +33,7 @@ async def main(message, arg):
                         description=f'{r.status}',
                         color=0xff0000
                     )
-                    return await message.channel.send(embed=embed)
+                    return await message.reply(embed=embed)
         if json[0]['return']:
             result = ', '.join(json[0]['return'])
         elif json[0]['status'] == 'OK':
@@ -43,4 +43,4 @@ async def main(message, arg):
         name=message.author.name,
         icon_url=message.author.avatar_url
     )
-    return await message.channel.send(embed=embed)
+    return await message.reply(embed=embed)
