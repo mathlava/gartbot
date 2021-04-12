@@ -2,14 +2,10 @@ import discord
 
 async def main(message, arg):
     
-    try:
-        usr_msg = await message.channel.fetch_message(int(arg.split()[0]))
-    except ValueError:
+    if message.reference == None:
         embed = discord.Embed(
             title='エラー',
-            description='`)escape メッセージID`と入力してください\n' \
-                'メッセージIDの取得の方法は' \
-                '[こちら](https://support.discord.com/hc/ja/articles/206346498-ユーザー-サーバー-メッセージIDはどこで見つけられる-)',
+            description='エスケープしたいメッセージに返信してください',
             color=0xff0000
         )
         embed.set_author(
@@ -17,10 +13,12 @@ async def main(message, arg):
             icon_url=message.author.avatar_url
         )
         return await message.channel.send(embed=embed)
+    try:
+        usr_msg = await message.channel.fetch_message(message.reference.message_id)
     except discord.errors.NotFound:
         embed = discord.Embed(
             title='エラー',
-            description='このチャンネルにそのメッセージは見つかりませんでした',
+            description='そのメッセージは見つかりませんでした',
             color=0xff0000
         )
         embed.set_author(
@@ -29,4 +27,4 @@ async def main(message, arg):
         )
         return await message.channel.send(embed=embed)
     new_str = discord.utils.escape_markdown(usr_msg.content)
-    return await message.channel.send(new_str)
+    return await message.reply(new_str)

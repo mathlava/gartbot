@@ -48,7 +48,7 @@ async def main(message, arg):
         value='BrainF\*ck のプログラムを実行できます'
     )
     embed.add_field(
-        name=f'`{PREFIX}escape メッセージID`',
+        name=f'`{PREFIX}escape (エスケープしたいメッセージに返信)`',
         value=r'Discordの修飾(\*, \_, \\, ...)をエスケープして表示します'
     )
 
