@@ -64,4 +64,4 @@ async def main(message: discord.Message, arg: str):
         name=message.author.name,
         icon_url=message.author.avater_url
     )
-    return await message.reply(pekofied_sentence)
+    return await message.reply(pekofied_sentence, embed=embed)
