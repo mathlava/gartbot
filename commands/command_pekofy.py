@@ -48,20 +48,11 @@ async def main(message: discord.Message, arg: str):
             pekofied_sentence += t.surface()
     if flag:
         pekofied_sentence += 'ぺこ'
-    if len(pekofied_sentence) > 2000:
-        embed = discord.Embed(
-            title='エラー',
-            description='結果が2000文字を超えました',
-            color=0xff0000
-        )
-        embed.set_author(
-            name=message.author.name,
-            icon_url=message.author.avatar_url
-        )
-        return await message.reply(embed=embed)
-    embed = discord.Embed()
+    embed = discord.Embed(
+        description=pekofied_sentence
+    )
     embed.set_author(
         name=message.author.name,
         icon_url=message.author.avatar_url
     )
-    return await message.reply(pekofied_sentence, embed=embed)
+    return await message.reply(embed=embed)
