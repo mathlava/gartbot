@@ -28,7 +28,9 @@ async def main(message: discord.Message, arg: str):
     flag = False
     for t in tokens:
         if flag:
-            if t.part_of_speech()[1] == '終助詞':
+            if t.part_of_speech()[0] == '助動詞':
+                pekofied_sentence += t.surface()
+            elif t.part_of_speech()[1] == '終助詞':
                 if t.dictionary_form() == 'じゃん':
                     pekofied_sentence += 'ぺこ' + t.surface()
                 else:
