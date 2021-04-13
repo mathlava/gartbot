@@ -4,7 +4,7 @@ import sympy as sy
 class TooLargeNumber(Exception):
     pass
 
-async def sobibun(value):
+async def sobibun(value: int):
 
     if value > 100000000:
         raise TooLargeNumber()
@@ -13,7 +13,7 @@ async def sobibun(value):
     wa = [memo[factors[i]] // i for i in factors.keys()]
     return sum(wa)
 
-async def main(message, arg):
+async def main(message: discord.Message, arg: str):
 
     try:
         n = sy.sympify(arg.replace('i', 'I'))

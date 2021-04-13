@@ -1,6 +1,6 @@
 import discord
 
-async def main(message, arg):
+async def main(message: discord.Message, arg: str):
     
     if message.reference == None:
         embed = discord.Embed(

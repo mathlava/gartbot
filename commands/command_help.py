@@ -8,7 +8,7 @@ with open(os.path.dirname(__file__) + '/../config.json', 'r') as f:
 
 PREFIX = config_dict['prefix']
 
-async def main(message, arg):
+async def main(message: discord.Message, arg: str):
 
     embed = discord.Embed(
         title='がーとぼっと',

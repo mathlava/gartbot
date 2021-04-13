@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv(verbose=True)
 MIYUBOT_TOKEN = os.environ.get("MIYUBOT_TOKEN")
 
-async def main(message, arg):
+async def main(message: discord.Message, arg: str):
     
     if arg.replace(' ', '') == '1':
         result = '全ての素数'
