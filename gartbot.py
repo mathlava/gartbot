@@ -19,7 +19,6 @@ import asyncio
 import logging
 import os
 import secrets
-import traceback
 from collections import OrderedDict
 from importlib import import_module
 
@@ -64,14 +63,14 @@ async def on_ready():
 
 
 @client.event
-async def on_message(message):
+async def on_message(message: discord.Message):
 
     await reply(message)
     await inside_joke(message)
 
 
 @client.event
-async def on_message_edit(before, after):
+async def on_message_edit(before: discord.Message, after: discord.Message):
 
     # if the sent message is a call to the bot
     if before.id in user_message_id_to_bot_message:
@@ -85,23 +84,24 @@ async def on_message_edit(before, after):
 
 
 @client.event
-async def on_reaction_add(reaction, user):
+async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
 
-    if user == client.user:
+    if payload.user_id == client.user.id:
         return
 
     # if the reacted message is the bot's
     # and the person who reacted is the person who typed the command
-    if reaction.message.author == client.user \
-        and reaction.message.id in message_id_to_author_id \
-        and user.id == message_id_to_author_id[reaction.message.id]:
-
-        if str(reaction.emoji) in ('🚮', '✖️', '🗑️'):
-            await reaction.message.delete()
+    channel = client.get_channel(payload.channel_id)
+    message = await channel.fetch_message(payload.message_id)
+    if message.author == client.user \
+        and message.id in message_id_to_author_id \
+        and payload.user_id == message_id_to_author_id[message.id]:
+        if str(payload.emoji) in ('🚮', '✖️', '🗑️'):
+            await message.delete()
 
 
 # respond to the sent command
-async def reply(message):
+async def reply(message: discord.Message):
 
     # if the author is a bot other than PythonBot and botphilia
     if message.author.bot and not message.author.id in (614130545227726849, 674207357202464769):
@@ -140,11 +140,11 @@ async def reply(message):
                 await sent_message.add_reaction('🚮')
 
 
-async def inside_joke(message):
+async def inside_joke(message: discord.Message):
 
     if ':poponta:' in message.content or ':poponting:' in message.content:
         await message.add_reaction('🤔')
-    
+
     if 'にゃーん' in message.content:
         await message.add_reaction('😿')
 
