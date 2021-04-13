@@ -51,6 +51,10 @@ async def main(message: discord.Message, arg: str):
         name=f'`{PREFIX}escape (エスケープしたいメッセージに返信)`',
         value=r'Discordの修飾(\*, \_, \\, ...)をエスケープして表示します'
     )
+    embed.add_field(
+        name=f'`{PREFIX}pekofy 文章（もしくは返信）`',
+        value='語尾にぺこをつけます'
+    )
 
     embed.set_author(
         name=message.author.name,
