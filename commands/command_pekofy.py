@@ -59,4 +59,9 @@ async def main(message: discord.Message, arg: str):
             icon_url=message.author.avatar_url
         )
         return await message.reply(embed=embed)
+    embed = discord.Embed()
+    embed.set_author(
+        name=message.author.name,
+        icon_url=message.author.avater_url
+    )
     return await message.reply(pekofied_sentence)
