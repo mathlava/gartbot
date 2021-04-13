@@ -2,3 +2,4 @@ discord.py>=1.6
 python-dotenv
 sympy
 sudachipy
+sudachidict_core
