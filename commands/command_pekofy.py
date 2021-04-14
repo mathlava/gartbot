@@ -26,6 +26,7 @@ async def main(message: discord.Message, arg: str):
         tokens = tokenizer_obj.tokenize(sentence, mode)
         pekofied_sentences = ''
         pekofied_sentence = ''
+        noun_flag = False
         final_form_flag = False
         for t in tokens:
             if noun_flag:
