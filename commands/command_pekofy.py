@@ -22,9 +22,9 @@ async def main(message: discord.Message, arg: str):
             icon_url=message.author.avatar_url
         )
         return await message.reply(embed=embed)
+    pekofied_sentences = ''
     for sentence in sentences.splitlines():
         tokens = tokenizer_obj.tokenize(sentence, mode)
-        pekofied_sentences = ''
         pekofied_sentence = ''
         noun_flag = False
         final_form_flag = False
@@ -61,6 +61,8 @@ async def main(message: discord.Message, arg: str):
                 final_form_flag = True
             else:
                 pekofied_sentence += t.surface()
+        if noun_flag:
+            pekofied_sentence += 'ぺこ'
         if final_form_flag:
             pekofied_sentence += 'ぺこ'
         pekofied_sentences += pekofied_sentence + '\n'
