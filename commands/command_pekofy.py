@@ -8,9 +8,9 @@ async def main(message: discord.Message, arg: str):
     mode = tokenizer.Tokenizer.SplitMode.C
     if message.reference:
         referenced_message = await message.channel.fetch_message(message.reference.message_id)
-        sentence = referenced_message.content
+        sentences = referenced_message.content
     else:
-        sentence = arg
+        sentences = arg
     if len(sentence) == 0:
         embed = discord.Embed(
             title='エラー',
@@ -22,36 +22,49 @@ async def main(message: discord.Message, arg: str):
             icon_url=message.author.avatar_url
         )
         return await message.reply(embed=embed)
-
-    tokens = tokenizer_obj.tokenize(sentence, mode)
-    pekofied_sentence = ''
-    flag = False
-    for t in tokens:
-        if flag:
-            if t.part_of_speech()[0] == '助動詞':
-                pekofied_sentence += t.surface()
-            elif t.part_of_speech()[1] == '終助詞':
-                if t.dictionary_form() == 'じゃん':
+    for sentence in sentences.splitlines():
+        tokens = tokenizer_obj.tokenize(sentence, mode)
+        pekofied_sentences = ''
+        pekofied_sentence = ''
+        final_form_flag = False
+        for t in tokens:
+            if noun_flag:
+                if t.part_of_speech()[1] == '句点':
+                    pekofied_sentence += 'ぺこ' + t.surface()
+                elif t.part_of_speech()[1] == '終助詞':
                     pekofied_sentence += 'ぺこ' + t.surface()
                 else:
                     pekofied_sentence += t.surface()
-            elif t.part_of_speech()[1] == '接続助詞':
-                if t.dictionary_form() == 'と':
+                noun_flag = False
+            elif final_form_flag:
+                if t.part_of_speech()[0] == '助動詞':
                     pekofied_sentence += t.surface()
+                elif t.part_of_speech()[1] == '終助詞':
+                    if t.dictionary_form() == 'じゃん':
+                        pekofied_sentence += 'ぺこ' + t.surface()
+                    else:
+                        pekofied_sentence += t.surface()
+                elif t.part_of_speech()[1] == '接続助詞':
+                    if t.dictionary_form() == 'と':
+                        pekofied_sentence += t.surface()
+                    else:
+                        pekofied_sentence += 'ぺこだ' + t.surface()
                 else:
-                    pekofied_sentence += 'ぺこだ' + t.surface()
+                    pekofied_sentence += 'ぺこ' + t.surface()
+                final_form_flag = False
+            elif t.part_of_speech()[0] == '名詞':
+                pekofied_sentence += t.surface()
+                noun_flag = True
+            elif '終止形' in t.part_of_speech()[5]:
+                pekofied_sentence += t.surface()
+                final_form_flag = True
             else:
-                pekofied_sentence += 'ぺこ' + t.surface()
-            flag = False
-        elif '終止形' in t.part_of_speech()[5]:
-            pekofied_sentence += t.surface()
-            flag = True
-        else:
-            pekofied_sentence += t.surface()
-    if flag:
-        pekofied_sentence += 'ぺこ'
+                pekofied_sentence += t.surface()
+        if final_form_flag:
+            pekofied_sentence += 'ぺこ'
+        pekofied_sentences += pekofied_sentence + '\n'
     embed = discord.Embed(
-        description=pekofied_sentence
+        description=pekofied_sentences
     )
     embed.set_author(
         name=message.author.name,
