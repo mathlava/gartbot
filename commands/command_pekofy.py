@@ -11,7 +11,7 @@ async def main(message: discord.Message, arg: str):
         sentences = referenced_message.content
     else:
         sentences = arg
-    if len(sentence) == 0:
+    if len(sentences) == 0:
         embed = discord.Embed(
             title='エラー',
             description='文章が含まれるメッセージに返信するか引数に指定してください',
