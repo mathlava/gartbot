@@ -34,6 +34,8 @@ async def main(message: discord.Message, arg: str):
                     pekofied_sentence += 'ぺこ' + t.surface()
                 elif t.part_of_speech()[1] == '終助詞':
                     pekofied_sentence += 'ぺこ' + t.surface()
+                elif t.part_of_speech()[0] == '助動詞' and t.part_of_speech()[5] == '終止形-一般':
+                    pekofied_sentence += 'ぺこ' + t.surface()
                 else:
                     pekofied_sentence += t.surface()
                 noun_flag = False
@@ -56,7 +58,7 @@ async def main(message: discord.Message, arg: str):
             elif t.part_of_speech()[0] == '名詞':
                 pekofied_sentence += t.surface()
                 noun_flag = True
-            elif '終止形' in t.part_of_speech()[5]:
+            elif t.part_of_speech()[5] == '終止形-一般':
                 pekofied_sentence += t.surface()
                 final_form_flag = True
             else:
