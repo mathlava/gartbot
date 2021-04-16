@@ -8,6 +8,7 @@ with open(os.path.dirname(__file__) + '/../config.json', 'r') as f:
 
 PREFIX = config_dict['prefix']
 
+
 async def main(message: discord.Message, arg: str):
 
     embed = discord.Embed(
@@ -40,12 +41,12 @@ async def main(message: discord.Message, arg: str):
     )
     embed.add_field(
         name=f'`{PREFIX}ai 正整数`',
-        value='素微分するとその整数になる整数のうち' \
-            + ' [1, 10000000) の範囲にあるものを出力します'
+        value='素微分するとその整数になる整数のうち'
+              ' [1, 10000000) の範囲にあるものを出力します'
     )
     embed.add_field(
         name=f'`{PREFIX}bf コード`',
-        value='BrainF\*ck のプログラムを実行できます'
+        value='BrainF\\*ck のプログラムを実行できます'
     )
     embed.add_field(
         name=f'`{PREFIX}escape (エスケープしたいメッセージに返信)`',

@@ -2,12 +2,15 @@ import discord
 from sudachipy import tokenizer
 from sudachipy import dictionary
 
+
 async def main(message: discord.Message, arg: str):
 
     tokenizer_obj = dictionary.Dictionary().create()
     mode = tokenizer.Tokenizer.SplitMode.C
     if message.reference:
-        referenced_message = await message.channel.fetch_message(message.reference.message_id)
+        referenced_message = await message.channel.fetch_message(
+            message.reference.message_id
+        )
         sentences = referenced_message.content
     else:
         sentences = arg
@@ -34,7 +37,8 @@ async def main(message: discord.Message, arg: str):
                     pekofied_sentence += 'ぺこ' + t.surface()
                 elif t.part_of_speech()[1] == '終助詞':
                     pekofied_sentence += 'ぺこ' + t.surface()
-                elif t.part_of_speech()[0] == '助動詞' and t.part_of_speech()[5] == '終止形-一般':
+                elif t.part_of_speech()[0] == '助動詞' \
+                        and t.part_of_speech()[5] == '終止形-一般':
                     pekofied_sentence += 'ぺこ' + t.surface()
                 else:
                     pekofied_sentence += t.surface()

@@ -1,8 +1,10 @@
 import discord
 import sympy as sy
 
+
 class TooLargeNumber(Exception):
     pass
+
 
 async def sobibun(value: int):
 
@@ -12,6 +14,7 @@ async def sobibun(value: int):
     memo = {j: value * j for j in factors.values()}
     wa = [memo[factors[i]] // i for i in factors.keys()]
     return sum(wa)
+
 
 async def main(message: discord.Message, arg: str):
 
@@ -44,7 +47,9 @@ async def main(message: discord.Message, arg: str):
                 n_denominator *= 10
             d_numerator = await sobibun(n_numerator)
             d_denominator = await sobibun(n_denominator)
-            d = sy.sign(n) * (d_numerator * n_denominator - n_numerator * d_denominator) / n_denominator ** 2
+            d = sy.sign(n) \
+                * (d_numerator * n_denominator - n_numerator * d_denominator) \
+                / n_denominator ** 2
             result = str(d)
         else:
             n_norm2 = sy.re(n) ** 2 + sy.im(n) ** 2
@@ -52,7 +57,9 @@ async def main(message: discord.Message, arg: str):
             n_denominator = sy.fraction(n_norm2)[1]
             d_numerator = await sobibun(n_numerator)
             d_denominator = await sobibun(n_denominator)
-            d = n * (d_numerator * n_denominator - n_numerator * d_denominator) / (2 * n_denominator * n_numerator)
+            d = n \
+                * (d_numerator * n_denominator - n_numerator * d_denominator) \
+                / (2 * n_denominator * n_numerator)
             result = str(d)
     except TooLargeNumber:
         embed = discord.Embed(

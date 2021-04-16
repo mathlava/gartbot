@@ -2,6 +2,7 @@ import time
 
 import discord
 
+
 async def main(message: discord.Message, arg: str):
 
     s = list(message.content[3:])

@@ -1,8 +1,9 @@
 import discord
 
+
 async def main(message: discord.Message, arg: str):
-    
-    if message.reference == None:
+
+    if message.reference is None:
         embed = discord.Embed(
             title='エラー',
             description='エスケープしたいメッセージに返信してください',
@@ -14,7 +15,9 @@ async def main(message: discord.Message, arg: str):
         )
         return await message.reply(embed=embed)
     try:
-        usr_msg = await message.channel.fetch_message(message.reference.message_id)
+        usr_msg = await message.channel.fetch_message(
+            message.reference.message_id
+        )
     except discord.errors.NotFound:
         embed = discord.Embed(
             title='エラー',

@@ -30,7 +30,6 @@ from config import DISCORD_TOKEN, PREFIX
 # dictionary to adjust size automatically
 class LimitedSizeDict(OrderedDict):
 
-
     def __init__(self, *args, **kwds):
 
         self.size_limit = kwds.pop("size_limit", None)
@@ -55,6 +54,8 @@ client = discord.Client()
 message_id_to_author_id = LimitedSizeDict(size_limit=100)
 # link user's message to the bot's message
 user_message_id_to_bot_message = LimitedSizeDict(size_limit=100)
+
+here = os.path.dirname(os.path.abspath(__file__))
 
 
 @client.event
@@ -95,8 +96,8 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
     channel = client.get_channel(payload.channel_id)
     message = await channel.fetch_message(payload.message_id)
     if message.author == client.user \
-        and message.id in message_id_to_author_id \
-        and payload.user_id == message_id_to_author_id[message.id]:
+            and message.id in message_id_to_author_id \
+            and payload.user_id == message_id_to_author_id[message.id]:
         if str(payload.emoji) in ('🚮', '✖️', '🗑️'):
             await message.delete()
 
@@ -105,7 +106,8 @@ async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
 async def reply(message: discord.Message):
 
     # if the author is a bot other than PythonBot and botphilia
-    if message.author.bot and not message.author.id in (614130545227726849, 674207357202464769):
+    if message.author.bot and message.author.id \
+            not in (614130545227726849, 674207357202464769):
         return
 
     if message.content.startswith(PREFIX):
@@ -113,8 +115,8 @@ async def reply(message: discord.Message):
         command = message.content.split()[0][len(PREFIX):]
         arg = message.content[len(PREFIX) + len(command):].lstrip()
 
-        # if the command file exists atthe specified location
-        if os.path.exists(f'{os.path.dirname(os.path.abspath(__file__))}/commands/command_{command}.py'):
+        # if the command file exists at the specified location
+        if os.path.exists(f'{here}/commands/command_{command}.py'):
 
             command_module = import_module(f'commands.command_{command}')
             async with message.channel.typing():
@@ -127,10 +129,13 @@ async def reply(message: discord.Message):
                     embed = discord.Embed(
                         title='内部エラーが発生しました',
                         description='エラーが続く場合は公式サーバで報告してください\n'
-                            + 'https://discord.gg/7gypE3Q',
+                                    'https://discord.gg/7gypE3Q',
                         color=0xff0000
                     )
-                    embed.set_author(name=message.author.name, icon_url=message.author.avatar_url)
+                    embed.set_author(
+                        name=message.author.name,
+                        icon_url=message.author.avatar_url
+                    )
                     sent_message = await message.reply(embed=embed)
                 global message_id_to_author_id
                 global user_message_id_to_bot_message
@@ -152,10 +157,13 @@ async def inside_joke(message: discord.Message):
     if message.content.startswith('.OX'):
 
         def shobo_check(reaction, user):
-            return user.id == 667746111808864262 # しょぼっと
-        
+            return user.id == 667746111808864262  # しょぼっと
+
         try:
-            reaction, user = await client.wait_for('reaction_add', check=shobo_check, timeout=5.0)
+            reaction, user = await client.wait_for(
+                'reaction_add', check=shobo_check,
+                timeout=5.0
+            )
             print(user)
         except asyncio.TimeoutError:
             await message.add_reaction(secrets.choice(('⭕', '❌')))
